@@ -37,4 +37,15 @@ class ClickbusChallengeApplicationTests {
 			.jsonPath("$.createdAt").isNotEmpty()
 			.jsonPath("$.updatedAt").isNotEmpty();
 	}
+
+	@Test
+	@Description("It should return a bad request status code 400 when PlaceRequest is invalid.")
+	public void testInvalidRequestParams() {
+		webTestClient
+			.post()
+			.uri(PLACE_URI)
+			.bodyValue(new PlaceRequest(EMPTYNAME, CITY, EMPTYSTATE))
+			.exchange()
+			.expectStatus().isBadRequest();
+	}
 }
